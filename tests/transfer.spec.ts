@@ -38,4 +38,34 @@ test.describe('Task 1 - API Mocking (Money Transfer)', () => {
     // Verify the alert message
     expect(alertMessage).toBe('Success! Transaction ID: 12345');
   });
+
+  // Test B: Mock a failed money transfer response
+  test('Test B (Failure) - Mock 400 Bad Request response', async ({ page }) => {
+    // Handle alert dialog
+    let alertMessage = '';
+    page.on('dialog', async (dialog) => {
+      alertMessage = dialog.message();
+      await dialog.accept();
+    });
+
+    // Mock the API response for a failed transfer
+    await page.route('**/api/transfer', async (route) => {
+      await route.fulfill({
+        status: 400,
+        contentType: 'application/json',
+        body: JSON.stringify({
+          error: 'Insufficient funds',
+        }),
+      });
+    });
+
+    // Click the "Initiate Transfer" button
+    await page.getByRole('button', { name: 'Initiate Transfer' }).click();
+
+    // Verify the status message
+    await expect(page.locator('#status')).toHaveText('Error: Insufficient funds');
+
+    // Verify the alert message
+    expect(alertMessage).toBe('Error: Insufficient funds');
+  });
 });
