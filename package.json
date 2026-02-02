@@ -1,0 +1,24 @@
+{
+  "name": "anytax-task",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lawand/anytax-task.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/lawand/anytax-task/issues"
+  },
+  "homepage": "https://github.com/lawand/anytax-task#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.58.1"
+  }
+}
