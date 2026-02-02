@@ -19,5 +19,37 @@
     <button id="transfer">Initiate Transfer</button>
 
     <div id="status" aria-live="polite"></div>
+
+    <script>
+      const button = document.getElementById('transfer');
+      const statusDiv = document.getElementById('status');
+
+      button.addEventListener('click', async () => {
+        const amount = document.getElementById('amount').value;
+        statusDiv.textContent = 'Processing...';
+
+        try {
+          const response = await fetch('/api/transfer', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ amount: Number(amount) })
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+            statusDiv.textContent = `Success! Transaction ID: ${data.transactionId}`;
+            alert(`Success! Transaction ID: ${data.transactionId}`);
+          } else {
+            const errorData = await response.json();
+            const errorMsg = errorData.error || 'Transfer failed';
+            statusDiv.textContent = `Error: ${errorMsg}`;
+            alert(`Error: ${errorMsg}`);
+          }
+        } catch (err) {
+          statusDiv.textContent = 'Network error';
+          alert('Network error');
+        }
+      });
+    </script>
   </body>
 </html>
