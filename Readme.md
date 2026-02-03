@@ -18,3 +18,7 @@ npm install
 npx playwright install
 npx playwright test
 ```
+
+## Test results
+
+![Test results](Test-results.png)
